@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-
+from typing import Optional
 app=FastAPI() # Creating instance of FastAPI
 
 
@@ -24,7 +24,7 @@ def read_blog(): # So here we are converting id into an integer
 
 # QUERY Parameters se blog aa rha hai
 @app.get("/blog") # Query parameters we need not mention here in the route
-def blogList(limit=0,published=False): # But function will need to aaccept the query parameters
+def blogList(published:bool = False, limit=0, sort:Optional[str]=None): # But function will need to aaccept the query parameters
     if(limit and published):
         return{
             "data":f"{limit} published blogs from the blog list"
@@ -43,7 +43,7 @@ def blogList(limit=0,published=False): # But function will need to aaccept the q
         }
     }
 
-# Dynamic Routing 
+#  Path Parameter
 @app.get("/blog/{blog_id}") # From URL you will always get a string only even if you type a number it would be inside " ".
 def read_blog(blog_id: int): # So here we are converting id into an integer, This is Handled by Pydantic library.
     return {"blog_id": blog_id}
