@@ -1,5 +1,7 @@
 from fastapi import FastAPI
 from typing import Optional
+from pydantic import BaseModel 
+
 app=FastAPI() # Creating instance of FastAPI
 
 
@@ -47,4 +49,17 @@ def blogList(published:bool = False, limit=0, sort:Optional[str]=None): # But fu
 @app.get("/blog/{blog_id}") # From URL you will always get a string only even if you type a number it would be inside " ".
 def read_blog(blog_id: int): # So here we are converting id into an integer, This is Handled by Pydantic library.
     return {"blog_id": blog_id}
+
+# POST Method: To create something
+# We need to send request body and for that we need pydantic models
+#  We need to create a pydantic BaseModel blog
+class BlogModel(BaseModel):
+    title:str
+    body:str
+    published: Optional[str]
+
+@app.post("/blog") # Here we are using the POST method to create a new blog
+def create_blog(request:BlogModel):
+    # return request
+    return {'data':f"Blog is created with title {request.title}"}
 
