@@ -24,8 +24,12 @@ def read_blog(): # So here we are converting id into an integer
 
 # QUERY Parameters se blog aa rha hai
 @app.get("/blog") # Query parameters we need not mention here in the route
-def blogList(limit=0): # But function will need to aaccept the query parameters
-    if(limit):
+def blogList(limit=0,published=False): # But function will need to aaccept the query parameters
+    if(limit and published):
+        return{
+            "data":f"{limit} published blogs from the blog list"
+        }
+    elif(limit):
         return{
             "data":f"{limit} blogs from the blog list"
         }
