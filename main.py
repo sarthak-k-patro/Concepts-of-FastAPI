@@ -15,6 +15,14 @@ def index():  # function name could be anything it doesn't matter
 def about():    
     return {"data": "This is about page"}
 
+@app.get("/blog/unpublished")  # This should be kept above the dynamic one otherwise it will throw error, Because /blog/dynamic parameter will match if we dont keep it above dynamic parameter route
+def read_blog(): # So here we are converting id into an integer
+    return {"Unpublished blogs": [
+        1,2,3,4,5
+    ]}
+
+# Dynamic Routing 
 @app.get("/blog/{blog_id}") # From URL you will always get a string only even if you type a number it would be inside " ".
 def read_blog(blog_id: int): # So here we are converting id into an integer
     return {"blog_id": blog_id}
+
