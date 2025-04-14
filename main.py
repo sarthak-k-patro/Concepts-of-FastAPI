@@ -21,8 +21,26 @@ def read_blog(): # So here we are converting id into an integer
         1,2,3,4,5
     ]}
 
+
+# QUERY Parameters se blog aa rha hai
+@app.get("/blog") # Query parameters we need not mention here in the route
+def blogList(limit=0): # But function will need to aaccept the query parameters
+    if(limit):
+        return{
+            "data":f"{limit} blogs from the blog list"
+        }
+    return{
+        "blogList":{
+            1:{"blog 1"},
+            2:{"blog 2"},
+            3:{"blog 3"},
+            4:{"blog 4"},
+            5:{"blog 5"},
+        }
+    }
+
 # Dynamic Routing 
 @app.get("/blog/{blog_id}") # From URL you will always get a string only even if you type a number it would be inside " ".
-def read_blog(blog_id: int): # So here we are converting id into an integer
+def read_blog(blog_id: int): # So here we are converting id into an integer, This is Handled by Pydantic library.
     return {"blog_id": blog_id}
 
